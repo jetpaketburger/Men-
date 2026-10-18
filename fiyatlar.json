@@ -1,0 +1,10 @@
+{
+  "_not": "Avantajlı Menüler fiyatları. Bir ürünün fiyatını tırnak olmadan yaz, örnek: \"fiyat\": 250. Fiyat null ise ürün sitede Yakında görünür ve sepete eklenemez.",
+  "urunler": [
+    { "id": "v1", "ad": "2’li Hamburger Menü", "fiyat": null },
+    { "id": "v2", "ad": "2’li Tavuk Burger Menü", "fiyat": null },
+    { "id": "v3", "ad": "3’lü Tavuk Burger Menü", "fiyat": null },
+    { "id": "v4", "ad": "Kombo 4’lü Menü", "fiyat": null },
+    { "id": "v5", "ad": "Combo Cheese", "fiyat": 349 }
+  ]
+}
