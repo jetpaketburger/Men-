@@ -1,0 +1,213 @@
+{
+ "aktif": true,
+ "bilgi": "Teslimat bölgemiz: Sapanca.",
+ "ucret": null,
+ "minimum": null,
+ "sure": null,
+ "mesaj_disi": "Seçtiğiniz bölge teslimat alanımızda görünmüyor. Lütfen sipariş vermeden önce 0553 903 54 04 numarasını arayın.",
+ "bolgeler": [
+  {
+   "ad": "Akçay",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "Balkaya",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "Camicedit",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "Çayiçi",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "Fevziye",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "Gazipaşa",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "Göl",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "Güldibi",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "Hacımercan",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "İkramiye",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "İlmiye",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "İstanbuldere",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "Kırkpınar Hasanpaşa",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "Kırkpınar Soğuksu",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "Kırkpınar Tepebaşı",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "Kurtköy Dibektaş",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "Kurtköy Fatih",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "Kurtköy Yavuzselim",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "Kuruçeşme",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "Mahmudiye",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "Memnuniye",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "Muradiye",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "Nailiye",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "Rüstempaşa",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "Şükriye",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "Ünlüce",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "Uzunkum",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "Yanık",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  },
+  {
+   "ad": "Yenimahalle",
+   "ucret": null,
+   "minimum": null,
+   "sure": null,
+   "aktif": true
+  }
+ ]
+}
