@@ -287,6 +287,9 @@ button, input, textarea, select { font: inherit; color: inherit; }
 .field label span { opacity: 0.7; }
 .zone-note { margin: -0.4rem 0 0.9rem; font-size: 0.85rem; color: var(--muted); }
 .zone-note.warn { color: #ff8a80; }
+.min-note { margin: 0 0 0.9rem; font-size: 0.9rem; font-weight: 600; color: var(--gold); }
+.min-note.warn { color: #ff8a80; }
+.btn.wa.lock { opacity: 0.45; }
 .lines .ln small.dr { color: var(--paper); font-weight: 600; }
 .alt { display: flex; flex-wrap: wrap; gap: 0 0.7rem; }
 .alt span { white-space: nowrap; }
@@ -368,6 +371,8 @@ var DEFAULT_PRICES = { v1: null, v2: null, v3: null, v4: null, v5: 349 };
 var VP = DEFAULT_PRICES;
 /* Geçici olarak "Yakında" gösterilen ürünler: fiyatı yazılı kalır ama sepete eklenemez. Tekrar açmak için ilgili satırı silin (örnek: b5 satırı). */
 var COMING_SOON = { b5: true };
+/* Minimum sipariş tutarı (TL). Sepet bu tutarın altındaysa WhatsApp siparişi verilemez; bu tutar ve üzerindeki siparişlerde teslimat ücretsizdir. */
+var MIN_ORDER = 300;
 var stash = {};
 /* Teslimat bölgeleri: delivery.json dosyası varsa o kullanılır, yoksa aşağıdaki liste. ucret, minimum ve sure boşsa (null) hiçbir yerde gösterilmez ve uygulanmaz. */
 var DEFAULT_DELIVERY = {"aktif":true,"bilgi":"Teslimat bölgemiz: Sapanca.","ucret":null,"minimum":null,"sure":null,"mesaj_disi":"Seçtiğiniz bölge teslimat alanımızda görünmüyor. Lütfen sipariş vermeden önce 0553 903 54 04 numarasını arayın.","bolgeler":[{"ad":"Akçay","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"Balkaya","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"Camicedit","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"Çayiçi","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"Fevziye","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"Gazipaşa","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"Göl","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"Güldibi","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"Hacımercan","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"İkramiye","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"İlmiye","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"İstanbuldere","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"Kırkpınar Hasanpaşa","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"Kırkpınar Soğuksu","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"Kırkpınar Tepebaşı","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"Kurtköy Dibektaş","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"Kurtköy Fatih","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"Kurtköy Yavuzselim","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"Kuruçeşme","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"Mahmudiye","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"Memnuniye","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"Muradiye","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"Nailiye","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"Rüstempaşa","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"Şükriye","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"Ünlüce","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"Uzunkum","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"Yanık","ucret":null,"minimum":null,"sure":null,"aktif":true},{"ad":"Yenimahalle","ucret":null,"minimum":null,"sure":null,"aktif":true}]};
@@ -452,6 +457,7 @@ var SHELL =
     '<div class="field"><label for="cPhone">Telefon numarası</label><input id="cPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="05xx xxx xx xx"></div>' +
     '<div class="field" id="zoneField"><label for="cZone">Teslimat bölgesi (mahalle)</label><select id="cZone"></select></div>' +
     '<p class="zone-note" id="zoneNote" hidden></p>' +
+    '<p class="min-note" id="minNote" hidden></p>' +
     '<div class="field"><label for="addr">Teslimat adresi</label><textarea id="addr" autocomplete="street-address" placeholder="Sokak, bina adı / no, kat, daire ve adres tarifi"></textarea></div>' +
     '<div class="field"><label for="cMap">Google Haritalar konum bağlantısı <span>(isteğe bağlı)</span></label><input id="cMap" type="text" inputmode="url" autocapitalize="off" autocorrect="off" placeholder="https://maps.app.goo.gl/..."></div>' +
     '<div class="field"><label for="cNote">Sipariş notu <span>(isteğe bağlı)</span></label><textarea id="cNote" rows="2" placeholder="Örn: Soğansız olsun, zile basmayın"></textarea></div>' +
@@ -641,7 +647,7 @@ function zoneInfo() {
   }
   function pv(k) { return z && z[k] != null ? z[k] : DELIVERY[k]; }
   var u = pv("ucret"), m = pv("minimum"), s = pv("sure");
-  return { name: z ? z.ad : "", feeSet: isNum(u), fee: isNum(u) ? u : 0, minSet: isNum(m), min: isNum(m) ? m : 0, sure: typeof s === "string" ? s.trim() : "" };
+  return { name: z ? z.ad : "", feeSet: isNum(u) && totals().t < MIN_ORDER, fee: isNum(u) ? u : 0, minSet: isNum(m), min: isNum(m) ? m : 0, sure: typeof s === "string" ? s.trim() : "" };
 }
 function grand() { var z = zoneInfo(); return totals().t + (z && z.feeSet ? z.fee : 0); }
 function val(id) { var el = $(id); return el ? (el.value || "").trim() : ""; }
@@ -712,6 +718,10 @@ function renderCart() {
     msg = b.join(" · ");
   }
   note.textContent = msg; note.className = "zone-note" + (warn ? " warn" : ""); note.hidden = !msg;
+  var mn = $("minNote"), under = s.n > 0 && s.t < MIN_ORDER;
+  mn.textContent = s.n === 0 ? "" : under ? "Minimum sipariş tutarı " + MIN_ORDER + " TL’dir. Siparişinizi tamamlamak için " + (MIN_ORDER - s.t) + " TL daha ürün ekleyin." : MIN_ORDER + " TL ve üzeri siparişlerde teslimat ücretsizdir.";
+  mn.className = "min-note" + (under ? " warn" : ""); mn.hidden = s.n === 0;
+  $("waOrder").classList.toggle("lock", under); $("waOrder").setAttribute("aria-disabled", String(under));
   $("lines").innerHTML = linesHtml();
   syncWa();
   saveState();
@@ -904,10 +914,11 @@ document.addEventListener("click", function (e) {
   if (t.id === "editCancel") { cancelEdit(); return; }
   if (t.id === "editSave") { saveEdit(); return; }
 });
-function syncWa() { $("waOrder").href = waBase() + "?text=" + encodeURIComponent(orderText()); }
+function syncWa() { var a = $("waOrder"); if (totals().t < MIN_ORDER) { a.removeAttribute("href"); } else { a.href = waBase() + "?text=" + encodeURIComponent(orderText()); } }
 function orderIssue() {
   var z = zoneInfo(), s = totals();
   if (!s.n) { return { msg: "Sepetiniz boş." }; }
+  if (s.t < MIN_ORDER) { return { msg: "Minimum sipariş tutarı " + MIN_ORDER + " TL’dir. Siparişinizi tamamlamak için " + (MIN_ORDER - s.t) + " TL daha ürün ekleyin." }; }
   if (val("cName").split(/\s+/).filter(Boolean).length < 2) { return { msg: "Lütfen ad ve soyadınızı yazın.", id: "cName" }; }
   if (!phoneOk(val("cPhone"))) { return { msg: "Lütfen geçerli bir cep telefonu numarası yazın (05xx xxx xx xx).", id: "cPhone" }; }
   if (DELIVERY.aktif !== false) {
