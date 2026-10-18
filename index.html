@@ -391,13 +391,13 @@ var GROUPS = [
     { id: "v3", name: "3’lü Tavuk Burger Menü", dr: 1, sub: "3 Tavuk Burger + Patates + İçecek",
       lines: ["3 adet tavuk burger", "120 gram patates kızartması", "1 adet 330 ml içecek"],
       sum: "3 adet tavuk burger, 120 gram patates kızartması, 1 adet 330 ml içecek" },
-    { id: "v4", name: "Kombo 4’lü Menü", dr: 2, sub: "2 Hamburger + 2 Tavuk Burger + Patates + 2 İçecek",
-      lines: ["2 adet hamburger", "2 adet tavuk burger", "240 gram patates kızartması", "2 adet 330 ml içecek"],
-      sum: "2 adet hamburger, 2 adet tavuk burger, 240 gram patates kızartması, 2 adet 330 ml içecek" }
+    { id: "v4", name: "Kombo 4’lü Menü", dr: 0, incl: true, sub: "2 Hamburger + 2 Tavuk Burger + Patates + 1 Litre Coca-Cola",
+      lines: ["2 adet hamburger", "2 adet tavuk burger", "240 gram patates kızartması", "1 litre Coca-Cola"],
+      sum: "2 adet hamburger, 2 adet tavuk burger, 240 gram patates kızartması, 1 litre Coca-Cola" }
   ]},
   { id: "aperatif", name: "Aperatifler", kind: "line", items: [
     { id: "a1", name: "Patates Kızartması" },
-    { id: "a2", name: "Soğan Halkası" },
+    { id: "a2", name: "Soğan Halkası (6 adet)" },
     { id: "a3", name: "Tavuk Nugget (6 adet)" },
     { id: "a4", name: "Mozzarella Stick (6 adet)" },
     { id: "v5", kind: "combo", name: "Combo Cheese", dr: 0, sub: "Aperatif kombosu (içecek dahil değil)",
@@ -532,7 +532,7 @@ function burgerCard(it) {
 function comboCard(it) {
   var p = comboPrice(it.id), q = qtyFor(it.id);
   var h = '<li class="pc cb' + (p === null ? " off" : "") + '"><img class="ph" data-id="' + it.id + '" src="' + IMG[it.id] + '" alt="' + esc(it.name) + '"><h3>' + it.name + '</h3>' +
-    '<ul class="cbl">' + it.lines.map(function (l) { return '<li>' + l + '</li>'; }).join("") + (it.dr === 0 ? '<li class="no">İçecek dahil değil</li>' : "") + '</ul>';
+    '<ul class="cbl">' + it.lines.map(function (l) { return '<li>' + l + '</li>'; }).join("") + (it.dr === 0 && !it.incl ? '<li class="no">İçecek dahil değil</li>' : "") + '</ul>';
   if (editing) { return h + '</li>'; }
   if (p === null) { return h + '<p class="pr soon">Yakında</p><button type="button" class="add" disabled aria-disabled="true">Yakında</button></li>'; }
   return h + '<p class="pr">' + p + ' TL</p><button type="button" class="add' + (q ? " on" : "") + '" ' + (it.dr ? "data-pick" : "data-add") + '="' + it.id + '" aria-label="' + it.name + ' ' + p + ' lira, sepete ekle">+ Sepete Ekle' + (q ? '<span class="q">' + q + '</span>' : "") + '</button></li>';
