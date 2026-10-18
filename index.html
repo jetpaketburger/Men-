@@ -575,7 +575,7 @@ function orderText() {
   var secs = [];
   if (items.length) { secs.push("SİPARİŞ\n" + items.join("\n")); }
   if (extra.length) { secs.push("AYRI İÇECEKLER\n" + extra.join("\n")); }
-  var sum = z && z.feeSet ? "Ara toplam: " + tl(s.t) + "\nTeslimat ücreti: " + tl(z.fee) + "\nGenel toplam: " + tl(s.t + z.fee) : "Toplam (teslimat hariç): " + tl(s.t);
+  var sum = z && z.feeSet ? "Ara toplam: " + tl(s.t) + "\nTeslimat ücreti: " + tl(z.fee) + "\nGenel toplam: " + tl(s.t + z.fee) : "Toplam: " + tl(s.t);
   var pm = document.querySelector('input[name="pay"]:checked');
   return "Merhaba, Jet Paket Burger'dan sipariş vermek istiyorum:\n\n" + secs.join("\n\n") + "\n\n" + sum + "\n\nMÜŞTERİ\n" +
     "Ad Soyad: " + (val("cName") || "-") + "\n" +
