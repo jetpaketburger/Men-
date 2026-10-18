@@ -108,7 +108,11 @@ svg { display: block; }
 .card img { width: 5.6rem; height: auto; max-width: 100%; display: block; border-radius: 4px; }
 .card h3, .line h3 { margin: 0; font-family: var(--f-display); font-weight: 800; text-transform: uppercase; font-size: 1.45rem; letter-spacing: 0.02em; line-height: 1.05; }
 .card p { margin: 0.25rem 0 0; color: var(--muted); font-size: 0.92rem; }
-.opts { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.45rem; margin-top: 0.3rem; }
+.opts { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.45rem; margin-top: 0.3rem; }
+.opts .opt { flex-direction: row; justify-content: flex-start; gap: 0.7rem; min-height: 3.6rem; padding: 0.5rem 1rem; text-align: left; }
+.opts .opt .op { margin-left: auto; }
+.opts .opt .ol { font-size: 1.05rem; }
+.opts .opt .os { font-size: 0.85rem; }
 
 /* Fiyat kutusu */
 .opt {
@@ -194,7 +198,7 @@ var TITLE_HTML = '<title>Jet Paket Burger</title><link rel="stylesheet" href="ht
 var FALLBACK_RESET = ':root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}';
 
 var OPT = ["Tek", "Menü", "Büyük Menü"];
-var OPTSUB = ["", "Patates + içecek", ""];
+var OPTSUB = ["", "Burger + patates + içecek", ""];
 var GROUPS = [
   { id: "burger", name: "Burger Menüleri", kind: "burger", items: [
     { id: "b1", name: "Klasik Burger", desc: "İnce köfte, cheddar, marul, domates, turşu, özel sos" },
@@ -296,7 +300,7 @@ function renderMenu() {
     g.items.forEach(function (it, n) {
       if (g.kind === "burger") {
         html += '<li class="card"><img src="' + IMG[it.id] + '" alt="' + it.name + '"><div><h3>' + it.name + '</h3><p>' + it.desc + '</p></div><div class="opts">' +
-          [0, 1, 2].map(function (o) { return tile(it.id + "|" + o, OPT[o], OPTSUB[o]); }).join("") + '</div></li>';
+          [1].map(function (o) { return tile(it.id + "|" + o, OPT[o], OPTSUB[o]); }).join("") + '</div></li>';
       } else if (g.kind === "line") {
         html += '<li class="line"><img src="' + IMG[it.id] + '" alt="' + it.name + '"><h3>' + it.name + '</h3>' + tile(it.id, "Ekle", "") + '</li>';
       } else {
